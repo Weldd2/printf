@@ -6,7 +6,7 @@
 /*   By: antoinemura <antoinemura@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/02 16:39:18 by antoinemura       #+#    #+#             */
-/*   Updated: 2023/12/02 16:44:20 by antoinemura      ###   ########.fr       */
+/*   Updated: 2023/12/02 16:51:44 by antoinemura      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,6 @@ void	ft_handle_s(va_list *ap);
 void	ft_handle_c(va_list *ap);
 void	ft_handle_d_i(va_list *ap);
 void	ft_handle_x_upper(va_list *ap);
-void	ft_handle_percent(void);
+void	ft_handle_percent(va_list *args);
 void	ft_initialize_handlers(void (*handlers[256])(va_list *));
 int		ft_printf(const char *fmt, ...);

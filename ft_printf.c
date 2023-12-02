@@ -6,7 +6,7 @@
 /*   By: antoinemura <antoinemura@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/02 16:25:40 by antoinemura       #+#    #+#             */
-/*   Updated: 2023/12/02 16:43:48 by antoinemura      ###   ########.fr       */
+/*   Updated: 2023/12/02 16:51:32 by antoinemura      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,9 @@ void	ft_handle_x_upper(va_list *ap)
 	ft_putnbr_base(s, "0123456789ABCDEF");
 }
 
-void	ft_handle_percent(void)
+void	ft_handle_percent(va_list *args)
 {
+	(void)args;
 	ft_putchar('%');
 }
 
