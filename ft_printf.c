@@ -6,27 +6,27 @@
 /*   By: antoinemura <antoinemura@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/02 16:25:40 by antoinemura       #+#    #+#             */
-/*   Updated: 2023/12/02 16:51:32 by antoinemura      ###   ########.fr       */
+/*   Updated: 2023/12/09 18:25:43 by antoinemura      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-void	ft_handle_x_upper(va_list *ap)
+int	ft_handle_x_upper(va_list *ap)
 {
 	int	s;
 
 	s = va_arg(*ap, int);
-	ft_putnbr_base(s, "0123456789ABCDEF");
+	return (ft_putnbr_base(s, "0123456789ABCDEF"));
 }
 
-void	ft_handle_percent(va_list *args)
+int	ft_handle_percent(va_list *args)
 {
 	(void)args;
-	ft_putchar('%');
+	return (ft_putchar('%'));
 }
 
-void	ft_initialize_handlers(void (*handlers[256])(va_list *))
+void	ft_initialize_handlers(int (*handlers[256])(va_list *))
 {
 	handlers['d'] = ft_handle_d_i;
 	handlers['i'] = ft_handle_d_i;
@@ -41,8 +41,10 @@ void	ft_initialize_handlers(void (*handlers[256])(va_list *))
 int	ft_printf(const char *fmt, ...)
 {
 	va_list	ap;
-	void	(*handlers[256])(va_list *);
+	int	(*handlers[256])(va_list *);
+	int		count;
 
+	count = 0;
 	va_start(ap, fmt);
 	ft_initialize_handlers(handlers);
 	while (*fmt)
@@ -51,12 +53,12 @@ int	ft_printf(const char *fmt, ...)
 		{
 			fmt++;
 			if (handlers[(int)*fmt])
-				handlers[(int)*fmt](&ap);
+				count += handlers[(int)*fmt](&ap);
 		}
 		else
-			ft_putchar(*fmt);
+			count += ft_putchar(*fmt);
 		fmt++;
 	}
 	va_end(ap);
-	return (1);
+	return (count);
 }
