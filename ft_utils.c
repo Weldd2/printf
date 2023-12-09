@@ -6,7 +6,7 @@
 /*   By: antoinemura <antoinemura@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/02 16:37:48 by antoinemura       #+#    #+#             */
-/*   Updated: 2023/12/09 18:36:40 by antoinemura      ###   ########.fr       */
+/*   Updated: 2023/12/09 20:47:15 by antoinemura      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,7 @@ int	ft_putstring(char *s)
 
 int	ft_putchar(char c)
 {
-	write(1, &c, 1);
-	return (1);
+	return (write(1, &c, 1));
 }
 
 int	ft_putnbr(int i)
@@ -41,33 +40,50 @@ int	ft_putnbr(int i)
 
 	temp = 0;
 	count = 0;
-	while (i >= 10)
+	if (i == -2147483648)
 	{
-		count++;
-		temp = (i % 10) + '0';
-		write(1, &temp, 1);
-		i /= 10;
+		ft_putstring("-2147483648");
+		return (11);
 	}
-	temp = i + '0';
-	count++;
-	write(1, &temp, 1);
+	if (i < 0)
+	{
+		count += ft_putchar('-');
+		i *= -1;
+	}
+	temp = i % 10;
+	if (i >= 10)
+	{
+		count += ft_putnbr(i / 10);
+	}
+	count += ft_putchar(temp + '0');
 	return (count);
 }
 
-int	ft_putnbr_base(int nbr, char *base)
+int	ft_putunsignednbr(unsigned int i)
 {
-	int	base_len;
+	int	temp;
 	int	count;
+
+	temp = 0;
+	count = 0;
+	temp = i % 10;
+	if (i >= 10)
+	{
+		count += ft_putnbr(i / 10);
+	}
+	count += ft_putchar(temp + '0');
+	return (count);
+}
+
+int	ft_putnbr_base(unsigned long nbr, char *base)
+{
+	unsigned int	base_len;
+	int				count;
 
 	base_len = 0;
 	count = 0;
 	while (base[base_len])
 		base_len++;
-	if (nbr < 0)
-	{
-		count += ft_putchar('-');
-		nbr *= -1;
-	}
 	if (nbr >= base_len)
 	{
 		count += ft_putnbr_base(nbr / base_len, base);
@@ -76,11 +92,4 @@ int	ft_putnbr_base(int nbr, char *base)
 	else
 		count += ft_putchar(base[nbr]);
 	return (count);
-}
-
-int	ft_printaddr(void *addr)
-{
-	ft_putchar('0');
-	ft_putchar('x');
-	return (2 + ft_putnbr_base((unsigned long)addr, "0123456789abcdef"));
 }
